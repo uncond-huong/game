@@ -1,0 +1,134 @@
+/* Custom Font & Smooth Styling */
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  /* Nền Gradient Tím Hồng Pastel Chuyển Nhẹ Sang Xanh Lá Mịn */
+  background: linear-gradient(135deg, #fce7f3 0%, #f3e8ff 50%, #e6f4ea 100%);
+  min-height: 100vh;
+  color: #334155; /* Chữ màu xám than sang trọng, dễ đọc */
+}
+
+/* Thẻ Thủy Tinh (Glassmorphism) Tông Pastel */
+.glass-card {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(244, 114, 182, 0.2); /* Viền hồng pastel nhẹ */
+  box-shadow: 0 10px 25px -5px rgba(244, 114, 182, 0.1), 0 8px 10px -6px rgba(16, 185, 129, 0.05);
+}
+
+/* Tùy chỉnh thanh cuộn cho hợp tông Pastel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #fce7f3;
+}
+::-webkit-scrollbar-thumb {
+  background: #f472b6;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ec4899;
+}
+
+/* Override một số class Tailwind để chuyển hẳn tông màu sang Hồng & Xanh Lá Pastel */
+
+/* Background chính & Text Gradient */
+.bg-clip-text {
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+.from-amber-300, .via-amber-400, .to-amber-200 {
+  background-image: linear-gradient(to right, #ec4899, #10b981) !important;
+}
+
+/* Màu chữ & Icon điểm nhấn */
+.text-amber-400, .text-amber-300, .text-amber-200 {
+  color: #db2777 !important; /* Hồng đậm điểm nhấn */
+}
+.text-slate-400, .text-slate-300, .text-slate-200, .text-slate-100 {
+  color: #475569 !important;
+}
+.text-white {
+  color: #ffffff !important;
+}
+
+/* Ô Thẻ Tình Huống / Khung popup */
+.bg-slate-900\/80, .bg-slate-900\/60, .bg-slate-800 {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(244, 114, 182, 0.25) !important;
+}
+
+/* Viền & Badge Tình Huống */
+.border-slate-700, .border-slate-800, .border-slate-700\/60 {
+  border-color: #fbcfe8 !important;
+}
+.bg-amber-500\/20 {
+  background-color: #fce7f3 !important;
+}
+.border-amber-500\/30, .border-amber-500\/40 {
+  border-color: #f472b6 !important;
+}
+
+/* Nút bấm Đoán Khái Niệm & Nút Hiện Gợi Ý (Hồng Pastel) */
+button.bg-slate-800 {
+  background-color: #fce7f3 !important;
+  color: #db2777 !important;
+  border-color: #fbcfe8 !important;
+}
+button.bg-slate-800:hover {
+  background-color: #fbcfe8 !important;
+}
+
+.bg-amber-500\/20 {
+  background-color: #fce7f3 !important;
+  color: #db2777 !important;
+}
+
+/* Đồng hồ & Bảng điều khiển */
+#timer {
+  color: #059669 !important; /* Xanh lá đậm */
+}
+.fa-stopwatch {
+  color: #10b981 !important; /* Xanh lá pastel */
+}
+
+/* Khi đã mở / Trả lời đúng (Xanh Lá Pastel - Mint) */
+.border-emerald-500\/40, .bg-emerald-950\/20 {
+  border-color: #a7f3d0 !important;
+  background-color: rgba(209, 250, 229, 0.6) !important;
+}
+.bg-emerald-500\/20 {
+  background-color: #d1fae5 !important;
+}
+.text-emerald-300, .text-emerald-400 {
+  color: #047857 !important;
+}
+.bg-emerald-600 {
+  background-color: #10b981 !important;
+}
+.bg-emerald-600:hover {
+  background-color: #059669 !important;
+}
+
+/* Nút Nộp / Bắt đầu thuyết trình (Gradient Hồng -> Xanh Pastel) */
+.from-amber-500.to-amber-600 {
+  background-image: linear-gradient(to right, #f472b6, #34d399) !important;
+  color: #ffffff !important;
+}
+
+/* Popup Đóng / Hủy (Hồng Đỏ Pastel) */
+.bg-rose-600\/30 {
+  background-color: #ffe4e6 !important;
+  color: #e11d48 !important;
+}
+.bg-rose-600\/30:hover {
+  background-color: #fecdd3 !important;
+}
+
+/* Hộp gợi ý bổ sung */
+.bg-amber-500\/10 {
+  background-color: #fef3c7 !important;
+  border-color: #fde68a !important;
+  color: #b45309 !important;
+}

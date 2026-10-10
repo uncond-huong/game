@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minigame Khởi Động: Giải Mã Luật Hình Sự</title>
+  
+  <!-- Favicon Fix -->
+  <link rel="shortcut icon" href="#">
+
+  <!-- Tailwind CSS & FontAwesome CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Canvas Confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  
+  <!-- Custom CSS & JS -->
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body class="p-4 md:p-8 flex flex-col justify-between">
+
+  <!-- Header & Presenter Dashboard -->
+  <header class="max-w-6xl mx-auto w-full mb-6">
+    <div class="glass-card rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 border-amber-500/30">
+      
+      <!-- Title -->
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 text-2xl font-bold">
+          <i class="fa-solid fa-gavel"></i>
+        </div>
+        <div>
+          <h1 class="text-xl md:text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-amber-300 via-amber-400 to-amber-200">
+            GIẢI MÃ BÍ MẬT HÌNH SỰ
+          </h1>
+          <p class="text-xs text-slate-400">Minigame Khởi Động Thuyết Trình • Luật Hình Sự & Tố Tụng Hình Sự</p>
+        </div>
+      </div>
+
+      <!-- Presenter Controls (Timer Only) -->
+      <div class="flex items-center gap-4">
+        <!-- Countdown Timer -->
+        <div class="flex items-center gap-2 bg-slate-900/80 px-4 py-2 rounded-xl border border-slate-700">
+          <i class="fa-solid fa-stopwatch text-amber-400 text-lg"></i>
+          <span id="timer" class="text-xl font-mono font-bold text-amber-300 w-8 text-center">30</span>s
+          <button onclick="toggleTimer()" id="timerBtn" class="ml-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 px-3 py-1 rounded-lg text-xs font-semibold transition">
+            <i class="fa-solid fa-play"></i>
+          </button>
+          <button onclick="resetTimer()" class="bg-slate-700 hover:bg-slate-600 text-slate-300 px-2.5 py-1 rounded-lg text-xs transition">
+            <i class="fa-solid fa-rotate-right"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Game Container: Scenario Mode Only -->
+  <main class="max-w-6xl mx-auto w-full flex-grow flex flex-col justify-center">
+    <div class="space-y-6">
+      <div class="text-center">
+        <h2 class="text-xl font-extrabold text-slate-200">THỬ THÁCH PHÁ ÁN: ĐOÁN TỪ KHÓA QUA TÌNH HUỐNG</h2>
+        <p class="text-xs text-slate-400 mt-1">Đọc dữ kiện thực tế từ Bộ luật Hình sự và tìm ra khái niệm pháp lý chính xác</p>
+      </div>
+
+      <div id="scenarioContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Scenario cards rendered by JavaScript -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal Question Popup -->
+  <div id="questionModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
+    <div class="glass-card max-w-xl w-full rounded-2xl p-6 border-amber-500/40 space-y-5 relative">
+      <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="flex items-center gap-2 text-amber-400 font-bold text-sm uppercase">
+        <i class="fa-solid fa-scale-balanced"></i>
+        <span id="modalCategory">Tình Huống Pháp Lý</span>
+      </div>
+
+      <h3 id="modalQuestion" class="text-base md:text-lg font-medium text-slate-100 leading-relaxed bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+        Nội dung tình huống...
+      </h3>
+
+      <div id="modalClueBox" class="bg-amber-500/10 border border-amber-500/30 p-3 rounded-xl text-amber-200 text-xs hidden">
+        <i class="fa-solid fa-key mr-1"></i> <strong>Gợi ý:</strong> <span id="modalClueText"></span>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-700">
+        <button onclick="showClue()" class="px-4 py-2 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 rounded-xl text-xs font-bold transition">
+          <i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Hiện Gợi Ý
+        </button>
+
+        <div class="flex gap-2">
+          <button onclick="revealModalAnswer(false)" class="px-4 py-2 bg-rose-600/30 hover:bg-rose-600/50 text-rose-300 rounded-xl text-xs font-bold transition">
+            <i class="fa-solid fa-xmark mr-1"></i>Đóng
+          </button>
+          <button onclick="revealModalAnswer(true)" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow-lg shadow-emerald-600/30 transition">
+            <i class="fa-solid fa-check mr-1"></i>Hiện Đáp Án
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer & Summary Bridge -->
+  <footer class="max-w-6xl mx-auto w-full mt-8">
+    <div class="glass-card rounded-2xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+        <span>Sẵn sàng chuyển tiếp sang phần thuyết trình sau khi hoàn thành các câu hỏi.</span>
+      </div>
+      <button onclick="showSummaryModal()" class="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-extrabold rounded-xl hover:brightness-110 transition shadow-lg shadow-amber-500/20">
+        <i class="fa-solid fa-paper-plane mr-1.5"></i>Tổng Kết & Bắt Đầu Thuyết Trình
+      </button>
+    </div>
+  </footer>
+
+  <!-- Summary Modal -->
+  <div id="summaryModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
+    <div class="glass-card max-w-2xl w-full rounded-2xl p-6 border-amber-500/40 space-y-6">
+      <div class="text-center space-y-2">
+        <div class="inline-flex p-3 bg-amber-500/20 text-amber-400 rounded-full text-3xl mb-2">
+          <i class="fa-solid fa-trophy"></i>
+        </div>
+        <h2 class="text-2xl font-black text-amber-300">5 TỪ KHÓA CỐT LÕI CỦA BÀI THUYẾT TRÌNH</h2>
+        <p class="text-xs text-slate-300">Nhóm 3: Luật Hình Sự & Tố Tụng Hình Sự</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700">
+          <span class="text-xs text-amber-400 font-bold block">1. TỘI PHẠM</span>
+          <p class="text-[11px] text-slate-300 mt-1">Hành vi nguy hiểm cho xã hội được quy định trong BLHS, do người có năng lực TNHS hoặc PNTM thực hiện.</p>
+        </div>
+        <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700">
+          <span class="text-xs text-amber-400 font-bold block">2. HÌNH PHẠT CHÍNH</span>
+          <p class="text-[11px] text-slate-300 mt-1">Hình phạt cơ bản bắt buộc áp dụng độc lập cho mỗi tội phạm (Cảnh cáo, Phạt tiền, Tù có thời hạn, Tử hình...)</p>
+        </div>
+        <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700">
+          <span class="text-xs text-amber-400 font-bold block">3. HÌNH PHẠT BỔ SUNG</span>
+          <p class="text-[11px] text-slate-300 mt-1">Không thể áp dụng độc lập, chỉ tuyên kèm hình phạt chính để tước điều kiện tái phạm (Cấm hành nghề, Tịch thu tài sản...)</p>
+        </div>
+        <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700">
+          <span class="text-xs text-amber-400 font-bold block">4. PHÁP NHÂN THƯƠNG MẠI</span>
+          <p class="text-[11px] text-slate-300 mt-1">Chủ thể đặc biệt (tổ chức kinh tế) bị truy cứu TNHS từ BLHS 2015 với phạt tiền, đình chỉ hoạt động, cấm huy động vốn.</p>
+        </div>
+        <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700 md:col-span-2">
+          <span class="text-xs text-amber-400 font-bold block">5. TRỤC XUẤT</span>
+          <p class="text-[11px] text-slate-300 mt-1">Hình phạt vừa là hình phạt chính vừa là bổ sung, CHỈ áp dụng riêng đối với người nước ngoài phạm tội.</p>
+        </div>
+      </div>
+
+      <div class="text-center pt-2">
+        <button onclick="closeSummaryModal()" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-xs transition">
+          <i class="fa-solid fa-play mr-1"></i> Bắt Đầu Đi Vào Chi Tiết Bài Thuyết Trình
+        </button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
