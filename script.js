@@ -4,7 +4,7 @@ const keywordsData = [
     id: 1,
     keyword: "TỘI PHẠM",
     subHint: "Khái niệm trung tâm của Luật Hình sự, hành vi nguy hiểm cho xã hội bị BLHS quy định.",
-    scenario: "Nguyễn Văn A có hành vi lừa đảo chiếm đoạt tài sản trị giá 500 triệu đồng. Hành vi của A gây nguy hiểm cho xã hội và bị Bộ luật Hình sự quy định là gì?",
+    scenario: "Tháng 9/2026, Nguyễn Đức Anh đã cố ý thực hiện hành vi dùng dao tấn công làm 3 người tử vong và 1 người bị thương nặng do mâu thuẫn tình cảm. Hành vi nguy hiểm cho xã hội, xâm phạm tính mạng con người và bị Bộ luật Hình sự quy định xử lý được gọi là gì?",
     revealed: false
   },
   {
